@@ -1,0 +1,143 @@
+* {
+  margin: auto;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.product-list img {
+  max-width: 100%;
+  height: 370px;
+  width: 340px;
+  text-align: center;
+  margin-left: 30px;
+}
+
+.product-list h5 {
+  margin-left: 100px;
+  text-align: center;
+  width: 220px;
+  height: 40px;
+}
+
+.product-list .description {
+  text-align: center;
+  width: 300px;
+  height: 30px;
+}
+.product-list .price {
+  text-align: center;
+  margin-left: 150px;
+  width: 100px;
+  border-radius: 10px;
+  background-color: cadetblue;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product {
+  flex: 0 0 100%;
+  padding: 30px 30px;
+}
+
+.product-list .button {
+  background-color: #edcaca;
+  color: #983232;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 30px;
+  width: 200px;
+  border-radius: 10px;
+}
+
+.product-detail {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  z-index: 999;
+}
+
+.close-button {
+  background-color: #ccc;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* css productdetail */
+
+.product-container {
+  display: flex;
+  border: 10px solid #e39fbf;
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-image {
+  margin-right: 50px;
+  max-width: 100%;
+  height: auto;
+  width: 340px;
+  text-align: center;
+  margin-left: 30px;
+  margin-top: 50px;
+}
+
+.product-image img {
+  max-width: 370px;
+  height: auto;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-info h3 {
+  margin-bottom: 20px;
+  text-align: center;
+  width: 500px;
+  height: 70px;
+  color: #b72f75;
+}
+
+.product-info p {
+  margin: 5px 0;
+  font-size: 17px;
+}
+
+.product-info .description {
+    max-width: 700px;
+    height: 30px;
+    margin-bottom: 20px;
+}
+.quantity-button {
+  background-color: #edcaca;
+  color: #983232;
+  width: 40px;
+}
+
+.quantity-input {
+  width: 70px;
+}
+
+.addtocart-button {
+  background-color: #edcaca;
+  color: #983232;
+  width: 140px;
+  font-size: 18px;
+}
+
+.addtocart-button:hover {
+  background-color: #dd5f5f;
+}
+
