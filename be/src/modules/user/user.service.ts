@@ -12,38 +12,53 @@ export class UserService {
   ) {}
 
   async findAll() {
-    return await this.userRepo.find({
-      relations: {},
-    });
+    return await this.userRepo.find();
   }
 
   async findUserById(id: number) {
-    return await this.userRepo.findOneBy({ id });
+    const user = await this.userRepo.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    return user;
   }
 
-  async getUserByQuery (query: UserEntity) {
+  async getUserByQuery(query: UserEntity) {
     return await this.userRepo.findOneBy(query);
-  };
+  }
 
   async findByUserAndPass(userName: string, password: string) {
-    return this.userRepo.findOneBy({
-      userName,
-      password,
+    return this.userRepo.findOne({
+      where: {
+        userName,
+        password,
+      },
     });
   }
 
   async createUser(userNew: UserDto) {
+    
     const user = this.userRepo.create(userNew);
+    console.log(user);
     return await this.userRepo.save(user);
   }
 
-  async updateUser(id: number, userUpdate: UserDto) {
+  async updateUser(id: number, userDto: UserDto) {
+    console.log(id);
+
     const user = await this.userRepo.findOneBy({ id });
-    this.userRepo.merge(user, userUpdate);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    Object.assign(user, userDto);
     return await this.userRepo.save(user);
   }
 
   async deleteUser(id: number) {
+    console.log(id);
+
     return await this.userRepo.delete(id);
-  }
+  } 
+  
 }
+

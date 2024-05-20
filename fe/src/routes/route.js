@@ -1,118 +1,37 @@
-// import HomePage from "../components/organisms/home/home";
-// import Layout from "../components/organisms/theme/layout";
-// import { MENU_URL } from "../constants/commont.constant";
-// import { Routes, Route, Navigate } from "react-router-dom"
-// import ProductList from "../pages/site-customer/products/productList";
-// import ProductDetailPage from "../pages/site-customer/products.detail.page";
-// import ShoppingCart from "../pages/site-customer/cart";
-// import RegisterComponent from '../pages/site-customer/register';
-// import LoginAdminComponent from "../pages/site-admin/auth/login";
-// import LoginCustomerComponent from "../pages/site-customer/login";
-// import React from "react";
-
-// const renderCustomRoute = () => {
-//     const customRouter = [
-//         {
-//             path: MENU_URL.CUSTOMER.HOME,
-//             component: <HomePage />
-//         }
-//     ]
-
-//     const categories = [
-//         "all",
-//         "food",
-//         "cosmetic",
-//         "jewelry",
-//         "fashion",
-//         "accessory",
-//         "healthcare",
-//         "other",
-//     ];
-
-
-    
-//     const routes = [
-//         { path: '/', element: <Navigate to="/products" /> },
-//         { path: '/products', element: <ProductList category="all" /> },
-//         { path: '/products/food', element: <ProductList category="food" /> },
-//         { path: '/products/cosmetic', element: <ProductList category="cosmetic" /> },
-//         { path: '/products/jewelry', element: <ProductList category="jewelry" /> },
-//         { path: '/products/fashion', element: <ProductList category="fashion" /> },
-//         { path: '/products/accessory', element: <ProductList category="accessory" /> },
-//         { path: '/products/healthcare', element: <ProductList category="healthcare" /> },
-//         { path: '/products/other', element: <ProductList category="other" /> },
-//         { path: '/products/:product_id', element: <ProductDetailPage /> },
-//         { path: '/cart', element: <ShoppingCart /> },
-//     ];
-
-
-//     return (
-//         <Layout>
-//             <Routes>
-//                 <Route
-//                     path="/login"
-//                     element={<LoginAdminComponent />
-//                     }
-//                 />
-//                 <Route
-//                     path="/login"
-//                     element={<LoginCustomerComponent />
-//                     }
-//                 />
-
-//                 <Route
-//                     path="/register"
-//                     element={<RegisterComponent />}
-//                 />
-
-//                 {
-//                     customRouter.map((item, key) => {
-//                         <Route key={key} path={item.path} element={item.component} />
-//                     })
-//                 };
-
-//                 {routes.map((route, index) => (
-//                     <Route key={index} path={route.path} element={route.element} />
-//                 ))}
-
-//                 {categories.map(category => (
-//                     <Route
-//                         key={category}
-//                         path={`/products/${category}`}
-//                         element={<ProductList category={category} />}
-//                     />
-//                 ))}
-                
-// {/* <Route path="/products/:product_id" component={ProductDetailPage} /> */}
-
-//             </Routes>
-
-//         </Layout>
-//     )
-// }
-
-// export default renderCustomRoute
-
 import { Routes, Route } from "react-router-dom";
-import Layout from "../components/organisms/theme/layout";
 import ProductList from "../pages/site-customer/products/productList";
 import ProductDetailPage from "../pages/site-customer/products.detail.page";
-import ShoppingCart from "../pages/site-customer/cart";
 import RegisterComponent from '../pages/site-customer/register';
-import LoginAdminComponent from "../pages/site-admin/auth/login";
-import LoginCustomerComponent from "../pages/site-customer/login";
-import React from "react";
+import React, { useState } from "react";
+import LoginComponent from "../pages/site-admin/auth/login";
+import AdminMenu from "../components/organisms/menu/admin.menu";
+import { Navigate } from "react-router-dom/dist";
+import UserManager from "../pages/site-admin/user-manage/user.manage";
+import ProductManager from "../pages/site-admin/product-manage/product.manage";
+import CategoryManageComponent from "../pages/site-admin/category-manage/category.manage";
+import AccountComponent from "../components/account.component";
+import HeaderComponent from "../components/organisms/header/header";
+import FooterComponent from "../components/organisms/footer/footer";
+import OrderSuccessPage from "../pages/site-customer/orderSuccessPage";
+import CartPage from "../pages/site-customer/cart";
+import ParentComponent from "../pages/site-customer/products/parent.product";
+import OrderManager from "../pages/site-admin/order.magage.js/order.manage";
+import EditOrder from "../pages/site-admin/order.magage.js/order.edit";
+
 
 const RenderCustomRoute = () => {
     return (
-        <Layout>
+        <>
+            <HeaderComponent />
             <Routes>
-                <Route path="/login" element={<LoginAdminComponent />} />
-                <Route path="/login-customer" element={<LoginCustomerComponent />} />
+                <Route path="/login" element={<LoginComponent />} />
                 <Route path="/register" element={<RegisterComponent />} />
+                <Route path="/account" element={<AccountComponent />} />
+                <Route path="/products" element={<ParentComponent/>} />
                 <Route path="/products" element={<ProductList category="all" />} />
                 <Route path="/products/:product_id" element={<ProductDetailPage />} />
-                <Route path="/cart" element={<ShoppingCart />} />
+                <Route path="/carts" element={<CartPage />} />
+                <Route path="/order-success" element={<OrderSuccessPage />} />
                 <Route path="/products/food" element={<ProductList category="food" />} />
                 <Route path="/products/cosmetic" element={<ProductList category="cosmetic" />} />
                 <Route path="/products/jewelry" element={<ProductList category="jewelry" />} />
@@ -120,8 +39,15 @@ const RenderCustomRoute = () => {
                 <Route path="/products/accessory" element={<ProductList category="accessory" />} />
                 <Route path="/products/healthcare" element={<ProductList category="healthcare" />} />
                 <Route path="/products/other" element={<ProductList category="other" />} />
+                <Route path="/admin/dashboard" element={<AdminMenu />} />
+                <Route path="/admin/productcategories" element={<CategoryManageComponent />} />
+                <Route path="/admin/products" element={<ProductManager />} />
+                <Route path="/admin/users" element={<UserManager />} />
+                <Route path="/admin/orders" element={<OrderManager />} />
+                <Route path="/edit-order/:id" element={<EditOrder />} />
             </Routes>
-        </Layout>
+            <FooterComponent />
+        </>
     )
 }
 

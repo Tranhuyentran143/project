@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import './products.css';
+import './product.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../style/all.style.css'
-import { addToCart } from '../../../api/cart.api';
+import '../../../components/organisms/header/header.css'
 
 const ProductDetail = ({ product }) => {
   const [quantity, setQuantity] = useState(1); // default 1
@@ -14,11 +14,26 @@ const ProductDetail = ({ product }) => {
   };
 
   const handleIncreaseQuantity = () => {
-    setQuantity(quantity + 1);
+    if (quantity < 10) {
+      setQuantity(quantity + 1);
+    }
   };
 
   const handleAddToCart = () => {
-    addToCart(product, quantity);
+    let carts = [];
+    if (localStorage.getItem('carts')) {
+      carts = JSON.parse(localStorage.getItem('carts'));
+    }
+
+    const cart = carts.find(cart => cart.product.product_id === product.product_id);
+
+    if (cart) {
+      cart.quantity += quantity
+      cart.total += cart.quantity * product.price
+    } else {
+      carts.push({ product: product, quantity: quantity, total: quantity * product.price });
+    }
+    localStorage.setItem("carts", JSON.stringify(carts));
   };
 
   return (
@@ -37,9 +52,8 @@ const ProductDetail = ({ product }) => {
             <input type="text" className="quantity-input" value={quantity} readOnly />
             <button className="quantity-button" onClick={handleIncreaseQuantity}>+</button>
           </div>
-        </div> <br/><br/>
-        {/* <p className="category">Category: {product.category_id}</p> */}
-        <button className="addtocart-button" onClick={handleAddToCart}>Add to cart</button>
+        </div> <br /><br />
+        <button className="addtocart-button" onClick={() => handleAddToCart(product)}>Add to Cart</button>
       </div>
     </div>
   );

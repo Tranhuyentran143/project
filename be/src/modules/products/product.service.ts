@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductDto } from 'src/core/dto/product.dto';
 import { ProductEntity } from 'src/core/entity/product.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class ProductService {
@@ -11,31 +11,62 @@ export class ProductService {
     private readonly productRepo: Repository<ProductEntity>,
   ) {}
 
-  async getProducts() {
+  async getAllProducts() {
+    return await this.productRepo.find();
+  }
+  async getProducts(limit: number, offset: number) {
     return await this.productRepo.find({
-      relations: {
-        // category: true,
+      skip: offset,
+      take: limit,
+    });
+  }
+
+  async getProductsSortedByPrice(limit: number, offset: number) {
+    return await this.productRepo.find({
+      order: {
+        price: 'ASC',
       },
+      skip: offset,
+      take: limit,
+    });
+  }
+
+  async getProductsSortedByName(limit: number, offset: number) {
+    return await this.productRepo.find({
+      order: {
+        name: 'ASC',
+      },
+      skip: offset,
+      take: limit,
     });
   }
 
   async getProductById(product_id: number) {
-    return await this.productRepo.findOneBy({ product_id });
+    return await this.productRepo.findOneBy({product_id});
   }
 
-  // async getProductsByCategoryName(categoryName: string) {
-  //   return await this.productRepo.findOne({
-  //     where: {
-  //       categoryName: categoryName
-  //     }
-  //   });
-  // }
+  async searchProducts(searchName: string, limit: number, offset: number): Promise<ProductEntity[]> {
+    return await this.productRepo.find({
+      where: {
+        name: ILike(`%${searchName}%`),
+      },
+      skip: offset,
+      take: limit,
+    });
+  }
 
-  async getProductsByCategoryName(categoryName: string) {
-    return await this.productRepo.createQueryBuilder("products")
-      .innerJoinAndSelect("products.category", "category")
-      .where("category.categoryName = :categoryName", { categoryName })
-      .getMany();
+  async getProductsByCategoryName(categoryName: string, limit: number, offset: number) {
+    if (categoryName === 'all') {
+      return await this.productRepo.find({
+        skip: offset,
+        take: limit,
+      });
+    }
+    return await this.productRepo.find({
+      where: { categoryName: categoryName },
+      skip: offset,
+      take: limit,
+    });
   }
 
   async createProduct(productDto: ProductDto) {
@@ -43,13 +74,8 @@ export class ProductService {
     return await this.productRepo.save(newProduct);
   }
 
-  //   async updateProduct(product_id: number, productDto: ProductDto) {
-  //     await this.productRepo.update(product_id, productDto);
-  //     return await this.productRepo.findOneBy({product_id});
-  //   }
-
   async updateProduct(product_id: number, productDto: ProductDto) {
-    const product = await this.productRepo.findOneBy({ product_id });
+    const product = await this.productRepo.findOneBy({product_id});
     if (!product) {
       throw new Error('Product not found');
     }

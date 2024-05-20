@@ -9,7 +9,17 @@ import { ProductEntity } from './core/entity/product.entity';
 import { ProductModule } from './modules/products/product.module';
 import { CategoryEntity } from './core/entity/category.entity';
 import { CategoryModule } from './modules/category/category.module';
+import { OrderEntity } from './core/entity/order.entity';
+import { OrderModule } from './modules/orders/orders.module';
+import { CartItemEntity } from './core/entity/cartItem.entity';
 
+declare global {
+  namespace Express {
+    interface Request {
+      user: UserEntity;
+    }
+  }
+}
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -19,14 +29,16 @@ import { CategoryModule } from './modules/category/category.module';
       username: 'root',
       password: 'root',
       database: 'last_project',
-      entities: [UserEntity, ProductEntity, CategoryEntity],
+      entities: [UserEntity, ProductEntity, CategoryEntity, OrderEntity, CartItemEntity ],
       synchronize: true,
       autoLoadEntities: true,
     }),
     AuthModule,
     UserModule,
     ProductModule,
-    CategoryModule
+    CategoryModule,
+    OrderModule
+    
   ],
   controllers: [AppController],
   providers: [AppService],

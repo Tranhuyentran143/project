@@ -37,7 +37,7 @@ const FooterComponent = () => {
             <img src={myImage} alt="thanh-toan" /></div>
         </div>
       </div>
-      <div style={{ fontStyle: 'italic', fontSize: 'smaller', display: 'inline-block', border: '1px solid black', padding: '5px', borderRadius: '5px', marginLeft: "440px", color: '#ff69b4' }}>
+      <div style={{ fontStyle: 'italic', fontSize: '18px', display: 'inline-block', border: '1px solid black', padding: '5px', borderRadius: '5px', marginLeft: "70px", color: '#ff69b4' }}>
         A different style of Grocery Store !
       </div>
     </div>

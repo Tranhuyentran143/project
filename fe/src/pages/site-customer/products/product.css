@@ -10,11 +10,11 @@
   height: 370px;
   width: 340px;
   text-align: center;
-  margin-left: 30px;
+  margin-left: 55px;
 }
 
 .product-list h5 {
-  margin-left: 100px;
+  margin-left: 120px;
   text-align: center;
   width: 220px;
   height: 40px;
@@ -27,7 +27,7 @@
 }
 .product-list .price {
   text-align: center;
-  margin-left: 150px;
+  margin-left: 170px;
   width: 100px;
   border-radius: 10px;
   background-color: cadetblue;
@@ -51,7 +51,7 @@
   cursor: pointer;
   font-weight: bold;
   text-align: center;
-  margin-left: 30px;
+  margin-left: 50px;
   width: 200px;
   border-radius: 10px;
 }
@@ -108,6 +108,8 @@
   width: 500px;
   height: 70px;
   color: #b72f75;
+  margin-left: 100px;
+  margin-bottom: 35px;
 }
 
 .product-info p {
@@ -116,9 +118,9 @@
 }
 
 .product-info .description {
-    max-width: 700px;
-    height: 30px;
-    margin-bottom: 20px;
+  max-width: 700px;
+  height: 30px;
+  margin-bottom: 20px;
 }
 .quantity-button {
   background-color: #edcaca;
@@ -140,4 +142,7 @@
 .addtocart-button:hover {
   background-color: #dd5f5f;
 }
+
+
+
 

@@ -1,40 +1,36 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { onLogin } from "../../../api/user.api";
-import { auth } from "../../../api/auth.api"
 import FormLoginComponent from "../../../components/modecules/form-login/form-login";
+import { auth } from "../../../api/auth.api";
 
-
-const LoginAdminComponent = () => {
+const LoginComponent = () => {
   const navigate = useNavigate();
-  const userRef = useRef();
-  const passwordRef = useRef();
+  const userRef = useRef(null);
+  const passwordRef = useRef(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const login = async () => {
-    const adminName = userRef.current.value;
-    const password = passwordRef.current.value;
-
-    const loginRes = await auth(adminName, password);
-    if (!loginRes) {
-      return;
-    }
-
-    localStorage.setItem("token", loginRes.access_token);
+  const handleLogin = async (userName, password) => {
     try {
-      const userInfo = await onLogin(adminName, password);
-      if (userInfo && userInfo.role === "ADMIN") {
-        navigate("/products");
+      const loggedIn = await auth(userName, password);
+      localStorage.setItem("token", loggedIn.access_token);
+  
+      if (loggedIn) {
+        setIsLoggedIn(true);
+          if (loggedIn.data.role === "admin") {
+          alert("Welcome to admin!");
+          navigate("/admin/dashboard");
+        } else {
+          alert("Hope you enjoy with our products!");
+          navigate("/products");
+        }
+          window.location.reload();
       } else {
-        // alert("Invalid credentials or not an admin account");
-        navigate("/");
+        alert("Login failed");
       }
     } catch (error) {
-      console.error('Error during login:', error);
+      console.error("Error occurred while logging in:", error);
+      navigate("/register");
     }
-  };
-
-  const handleLogin = async () => {
-    await login();
   };
 
   return (
@@ -43,9 +39,11 @@ const LoginAdminComponent = () => {
         titleLogin="Name"
         titlePassword="Password"
         submit={handleLogin}
+        userRef={userRef}
+        passwordRef={passwordRef}
       />
     </div>
   );
-}
+};
 
-export default LoginAdminComponent;
+export default LoginComponent;

@@ -1,0 +1,11 @@
+.admin-menu {
+  width: 200px;
+  padding: 20px;
+  background-color: #d777a3;
+  border-right: 1px solid #ccc;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}

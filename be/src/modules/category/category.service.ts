@@ -23,11 +23,17 @@ export class CategoryService {
     return await this.categoryRepo.findOneBy({ category_name });
   }
 
+  // async createCategory(categoryDto: CategoryDto) {
+  //   const newCategory = this.categoryRepo.create(categoryDto);
+  //   return await this.categoryRepo.save(newCategory);
+  // }
+
   async createCategory(categoryDto: CategoryDto) {
-    const newCategory = this.categoryRepo.create(categoryDto);
+    const { category_id, ...categoryData } = categoryDto;
+    const newCategory = this.categoryRepo.create(categoryData);
     return await this.categoryRepo.save(newCategory);
   }
-
+  
   async updateCategory(category_id: number, categoryDto: CategoryDto) {
     const category = await this.categoryRepo.findOneBy({category_id});
     if (!category) {

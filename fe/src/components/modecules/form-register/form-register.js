@@ -3,16 +3,17 @@ import { Link } from "react-router-dom";
 
 const FormRegisterComponent = (props) => {
 
-  const { titleRegister, titleEmail, titlePassword, titleRepeatPassword, submit, login_here } = props;
+  const { titleRegister, titlePhone, titleEmail, titlePassword, titleRepeatPassword, submit, login_here } = props;
 
   const userRef = useRef("");
+  const phoneRef = useRef("");
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const repeatPasswordRef = useRef("");
 
   const onSubmit = () => {
     if (submit) {
-      submit(userRef.current.value, emailRef.current.value, passwordRef.current.value, repeatPasswordRef.current.value);
+      submit(userRef.current.value, phoneRef.current.value, emailRef.current.value, passwordRef.current.value, repeatPasswordRef.current.value);
     }
   };
   return (<div className="w-100 p-3 ">
@@ -23,12 +24,15 @@ const FormRegisterComponent = (props) => {
             <div className="card" style={{ borderRadius: '15px' }}>
               <div className="card-body p-5">
                 <h2 className="text-uppercase text-center mb-5">Create an account</h2>
-
                 <div>
-
                   <div className="form-outline mb-4">
                     <label className="form-label" htmlFor="form3Example1cg" >{titleRegister} </label>
                     <input type="text" id="form3Example1cg" className="form-control form-control-lg" ref={userRef} />
+                  </div>
+
+                  <div className="form-outline mb-4">
+                    <label className="form-label" htmlFor="form3Example3cg">{titlePhone}</label>
+                    <input type="phone" id="form3Example2cg" className="form-control form-control-lg" ref={phoneRef} />
                   </div>
 
                   <div className="form-outline mb-4">
@@ -49,12 +53,9 @@ const FormRegisterComponent = (props) => {
                   <div className="d-flex justify-content-center">
                     <button type="button" className="btn btn-primary btn-block mb-4" onClick={onSubmit}>Register</button>
                   </div>
-                  <p className="text-center text-muted mt-5 mb-0">Have already an account?
+                  <p className="text-center text-muted mt-5 mb-0">Have already an account?<br/>
                     <Link to={"/login"}>Login Here</Link> </p>
-                  {/* className="fw-bold text-body" onClick={login_here}><u>Login here</u></a></p> */}
-
                 </div>
-
               </div>
             </div>
           </div>

@@ -8,9 +8,16 @@ const FormLoginComponent = (props) => {
 
   const onSubmit = () => {
     if (!submit) return;
-    submit(userRef.current.value, passwordRef.current.value);
+    const userName = userRef.current?.value;
+    const password = passwordRef.current?.value;
+    if (userName && password) {
+      submit(userName, password);
+    } else {
+      console.error("Username or password is empty");
+    }
   };
-
+  
+  
   return (
     <div style={{ textAlign: "center", width: "30%", height: "50%" }}>
       <div style={{ textAlign: "left", borderRadius: '15px' }} className="form-outline mb-4">

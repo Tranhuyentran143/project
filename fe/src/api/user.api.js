@@ -1,43 +1,53 @@
-import axios from "axios"
-import { USER_HOST_API } from "../constants/api.constant"
+import axiosInstance from "../config/axios.config";
+import { USER_HOST_API } from "../constants/api.constant";
 
 export const getUsers = async () => {
-    const response = await axios.get(USER_HOST_API);
+  try {
+    const response = await axiosInstance.get(USER_HOST_API);
+    console.log("Data from getUsers:", response.data);
     return response.data;
+  } catch (error) {
+    alert("Error fetching users:", error);
+    return { statusCode: 500, message: 'Error while fetching users' };
+  }
 };
 
-export const getUserById = async (user_id) => {
-    const response = await axios.get(`${USER_HOST_API}/${user_id}`);
+export const getUserById = async (id) => {
+  try {
+    const response = await axiosInstance.get(`${USER_HOST_API}/${id}`);
     return response.data;
+  } catch (error) {
+    alert(`Error fetching user by ID ${id}:`, error);
+    return { statusCode: 500, message: 'Error while fetching user by ID' };
+  }
 };
 
-// get user theo password
-// export const onLogin = async (user_name, password) => {
-//     const response = await axios.get(`${USER_HOST_API}?user_name=${user_name}&password=${password}`);
-//     return response.data[0];
-// };
-export const onLoginCus = async (user_name, password) => {
-    const response = await axios.get(`${USER_HOST_API}?user_name=${user_name}&password=${password}`);
-    return response.data && response.data.length > 0 ? response.data[0] : undefined;
-  };
-  export const onLogin = async (user_name, password) => {
-    const response = await axios.get(`${USER_HOST_API}?user_name=${user_name}&password=${password}`);
-    const userData = response.data && response.data.length > 0 ? response.data[0] : undefined;
-  
-    return userData;
-  };
-
-// create user
 export const createUser = async (user) => {
-    return await axios.post(USER_HOST_API, user);
+  try {
+    const response = await axiosInstance.post(USER_HOST_API, user);
+    return response.data;
+  } catch (error) {
+    alert("Error creating user:", error);
+    return { statusCode: 500, message: 'Error while creating user' };
+  }
+};
 
-}
-// update user
 export const updateUser = async (user) => {
-    return await axios.put(`${USER_HOST_API}/${user.id}`, user);
-}
+  try {
+    const response = await axiosInstance.put(`${USER_HOST_API}/update/${user.id}`, user);
+    return response.data;
+  } catch (error) {
+    alert(`Error updating user with ID ${user.id}:`, error);
+    return { statusCode: 500, message: 'Error while updating user' };
+  }
+};
 
-// delete user
-export const deleteUserById = async (user_id) => {
-    return await axios.delete(`${USER_HOST_API}/${user_id}`);
+export const deleteUserById = async (id) => {
+  try {
+    const response = await axiosInstance.delete(`${USER_HOST_API}/delete/${id}`);
+    return response.data;
+  } catch (error) {
+    alert(`Error deleting user with ID ${id}:`, error);
+    return { statusCode: 500, message: 'Error while deleting user' };
+  }
 };
